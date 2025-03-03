@@ -13,6 +13,8 @@ public class FruitList {
     public static void main(String[] args) {
         // Variables
         String choice = "";
+        String fruit = "";
+        boolean found = false;
 
         choice = displayMenu();
 
@@ -24,7 +26,10 @@ public class FruitList {
                     inputFruit();
                     break;
                 case "2": // Search
-                    searchList();
+                    System.out.print("Search for: ");
+                    fruit = input.nextLine();
+                    found = searchList(fruit);
+                    System.out.println("Fruit found in list: " + found);
                     break;
 
                 case "3": // Remove
@@ -64,33 +69,34 @@ public class FruitList {
         }
     }
 
-    public static void searchList() {
-        // Variables
-        boolean found = false;
-        String fruit;
+    public static boolean searchList(String fruit) {
         // Main
-        System.out.print("Search for: ");
-        fruit = input.nextLine();
-
         // Search
-        found = fruitList.search(fruit);
-
-        System.out.println("Fruit found in list: " + found);
+        return fruitList.search(fruit);
     }
 
     public static void removeFruit() {
         // Variables
         String fruit;
+        boolean found = false;
 
         // Main
         System.out.print("Remove: ");
         fruit = input.nextLine();
         
-        // Remove
-        fruitList.remove(fruit);
+        // test if fruit exists in list
+        found = searchList(fruit);
 
-        // Msg removal
-        System.out.println("Removed " + fruit + " from list.");
+        // Remove
+        if (found) {
+            fruitList.remove(fruit);
+
+            // Msg removal
+            System.out.println("Removed " + fruit + " from list.");
+        } else {
+            System.out.println("Fruit does not exist in list!");
+        }
+        
     }
 
     public static String displayMenu() {
